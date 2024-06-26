@@ -1,0 +1,15 @@
+/runs
+/result
+/res100
+/Test
+/Train
+/Val
+/Data
+/Dataset
+*.pyc
+*.xml
+*.txt
+*.jpg
+*.yaml
+*.pt
+practice.rar
