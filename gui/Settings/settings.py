@@ -8,9 +8,10 @@ def settings_page(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.START
 
     this_directory = os.path.dirname(os.path.abspath(__file__))
-    global path_to_model, path_to_img, conf 
+    global path_to_model, path_to_img, conf, path_to_model_line
     path_to_model = ''
     path_to_img = ''
+    path_to_model_line = ''
     conf = 0.5
     
 
@@ -24,6 +25,7 @@ def settings_page(page: ft.Page):
                 theme = settings["theme"]
                 pthtimg = settings["path_to_img"]
                 pthtmdl = settings["path_to_model"]
+                pthtmdll = settings["path_to_model_line"]
                 cnftxt = settings["conf"] * 100
 
         else:
@@ -33,6 +35,8 @@ def settings_page(page: ft.Page):
             pthtimg = 'No file selected'
         if pthtmdl == '':
             pthtmdl = 'No file selected'
+        if pthtmdll == '':
+            pthtmdll = 'No file selected'
         def hide_text():
             try:
                 show_text.value = ""
@@ -51,26 +55,26 @@ def settings_page(page: ft.Page):
                 content=image, width=page.window.width*1, height=page.window.height*0.6, alignment= ft.alignment.center, visible=True,  expand=True
             )
             page.add(image_container)
-        show_text.value = f"Theme: {theme}\nPath to image: {pthtimg}\nPath to model: {pthtmdl}\nConfidence: {cnftxt}"
+        show_text.value = f"Theme: {theme}\nPath to image: {pthtimg}\nPath to TextBlock Detector: {pthtmdl}\nPath to TextLine Detector: {pthtmdll}\nConfidence: {cnftxt}"
         show_text.update()
     
     
     
     
-    def save_settings(e, path_to_model = path_to_model, path_to_img = path_to_img, conf = conf):
+    def save_settings(e, path_to_model = path_to_model, path_to_img = path_to_img, path_to_model_line = path_to_model_line, conf = conf):
         with open( this_directory + "/settings.json", "w") as f:
-            json.dump({"theme": page.theme_mode.name, 'path_to_model': path_to_model, 'path_to_img': path_to_img, "conf": conf}, f)
+            json.dump({"theme": page.theme_mode.name, 'path_to_model': path_to_model, 'path_to_img': path_to_img, 'path_to_model_line': path_to_model_line,"conf": conf}, f)
 
     def save(e):
-        global path_to_model, path_to_img, conf
-        save_settings(e, path_to_model, path_to_img, conf/100)
+        global path_to_model, path_to_img, conf, path_to_model_line
+        save_settings(e, path_to_model, path_to_img, path_to_model_line,conf/100)
 
     async def change_theme(e):
         if theme_checkbox.value:
             page.theme_mode = ft.ThemeMode.DARK
         else:
             page.theme_mode = ft.ThemeMode.LIGHT
-        save_settings(e, path_to_model, path_to_img, conf/100)
+        save_settings(e, path_to_model, path_to_img, path_to_model_line,conf/100)
         page.update()
 
     theme_checkbox = ft.Checkbox(label="Dark theme", value=False, on_change=change_theme)
@@ -89,6 +93,7 @@ def settings_page(page: ft.Page):
                 theme_checkbox.value = False
             path_to_img = settings["path_to_img"]
             path_to_model = settings["path_to_model"]
+            path_to_model_line = settings["path_to_model_line"]
             conf = settings["conf"] * 100
     else:
         theme_checkbox.value = False
@@ -110,6 +115,22 @@ def settings_page(page: ft.Page):
             return
         global path_to_model
         path_to_model = e.files[0].path
+
+    def pick_models_result_line(e: ft.FilePickerResultEvent):
+        selected_file_model_line.value = (
+            ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
+        )
+        if e.files is not None:
+            if not (e.files[0].path.endswith('keras') or e.files[0].path.endswith('k5') or e.files[0].path.endswith('pt') or e.files[0].path.endswith('onnx')):
+                    selected_file_model_line.value = "Only .keras, .k5, .pt, .onnx files are allowed"
+                    selected_file_model_line.update()
+                    return
+                
+        selected_file_model_line.update()
+        if e.files is None:
+            return
+        global path_to_model_line
+        path_to_model_line = e.files[0].path
 
     def change_conf(e):
         global conf
@@ -135,19 +156,23 @@ def settings_page(page: ft.Page):
 
     model_file_select = ft.FilePicker(on_result=pick_models_result)
     img_file_select = ft.FilePicker(on_result=pick_img_result)
+    model_line_select = ft.FilePicker(on_result=pick_models_result_line)
     conf_input = ft.Slider(min=0, max=100, value = conf, divisions=100, on_change=change_conf, expand=True, label = "Confidence: {value}%", adaptive=True, height=page.window.height*0.025, width=page.window.width*0.25)
     selected_file_model = ft.Text(path_to_model)
     selected_file_img = ft.Text(path_to_img)
+    selected_file_model_line = ft.Text(path_to_model_line)
     
 
     page.overlay.append(model_file_select)
     page.overlay.append(img_file_select)
+    page.overlay.append(model_line_select)
+    
 
     page.add(
         ft.Row(
             [
                 ft.ElevatedButton(
-                    "Pick model",
+                    "Pick TextBlock Detector",
                     icon=ft.icons.UPLOAD_FILE,
                     on_click=lambda _: model_file_select.pick_files(
                         allow_multiple=False
@@ -157,7 +182,22 @@ def settings_page(page: ft.Page):
             ],
         )
     )
-
+    
+    page.add(
+        ft.Row(
+            [
+                ft.ElevatedButton(
+                    "Pick TextLine Detector",   
+                    icon=ft.icons.UPLOAD_FILE,
+                    on_click=lambda _: model_line_select.pick_files(
+                        allow_multiple=False
+                    ),
+                ),
+                selected_file_model_line,
+            ],
+        )
+    )
+    
     page.add(
         ft.Row(
             [
@@ -172,6 +212,8 @@ def settings_page(page: ft.Page):
             ],
         )
     )
+    
+    
     conf_text = ft.Text("Confidence: " + str(conf))
     page.add(ft.Column([conf_text, conf_input, ], spacing = 10))
     page.add(save_button)

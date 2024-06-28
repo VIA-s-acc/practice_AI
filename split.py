@@ -2,7 +2,7 @@ import os
 import shutil
 import random
 from tqdm import tqdm
-
+import cv2
 
 train_path_img = './Train/images'
 train_path_label = './Train/labels'
@@ -41,9 +41,11 @@ def train_test_split(path,neg_path=None, split = 0.2):
     for filex in tqdm(files[:train_size]):
       if filex == 'classes':
           continue
-      shutil.copy2(path + filex + '.jpg',f"{train_path_img}/" + filex + '.jpg' )
-      shutil.copy2(path + filex + '.txt', f"{train_path_label}/" + filex + '.txt')
-        
+      try:
+        shutil.copy2(path + filex + '.jpg',f"{train_path_img}/" + filex + '.jpg' )
+        shutil.copy2(path + filex + '.txt', f"{train_path_label}/" + filex + '.txt')
+      except:
+          pass  
     
 
     print(f"------ Training data created with 80% split {len(files[:train_size])} images -------")
@@ -63,19 +65,40 @@ def train_test_split(path,neg_path=None, split = 0.2):
     for filex in tqdm(files[train_size:]):
       if filex == 'classes':
           continue
-      shutil.copy2(path + filex + '.jpg', f"{val_path_img}/" + filex + '.jpg' )
-      shutil.copy2(path + filex + '.txt', f"{val_path_label}/" + filex + '.txt')
+      try:
+        shutil.copy2(path + filex + '.jpg', f"{val_path_img}/" + filex + '.jpg' )
+        shutil.copy2(path + filex + '.txt', f"{val_path_label}/" + filex + '.txt')
+      except:
+          pass
 
     print(f"------ Testing data created with a total of {len(files[train_size:])} images ----------")
     
     print("------ TASK COMPLETED -------")
 
-def convert_jpeg_to_jpg(path):
+def convert_tif_to_jpg(path):
     from PIL import Image
     for filename in os.listdir(path):
-        if filename.endswith('.jpeg') or filename.endswith('.png'):
+        if filename.endswith('.tif') or filename.endswith('.tif'):
             img = Image.open(path+filename)
             img.save(path+filename.split('.')[0]+'.jpg', 'JPEG', quality=100) 
             os.remove(path+filename)
-convert_jpeg_to_jpg('Data/')
-train_test_split('Data/')
+            
+def move_all_ext_to(path, path_to, ext, to_gray=False):
+    for filename in os.listdir(path):
+        if filename.endswith(ext):
+            if to_gray:
+                img_path = path+'\\'+filename
+                img = cv2.imread(img_path)
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                cv2.imwrite(path_to+'\\'+filename, img)
+            else:
+                shutil.copy2(path+'\\'+filename, path_to+'\\'+filename)
+
+def resize_all(path, size):
+    for filename in os.listdir(path):
+        if filename.endswith('.jpg'):
+            img = cv2.imread(path+'\\'+filename)
+            img = cv2.resize(img, size)
+            cv2.imwrite(path+'\\'+filename, img)
+
+train_test_split('gray/', None, 0.2)
