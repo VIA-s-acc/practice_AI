@@ -1,10 +1,18 @@
 @echo off
 
-REM Set the path to your virtual environment
-set "VENV_DIR=C:\practice\.venv"
 
-REM Activate the virtual environment
-call "%VENV_DIR%\Scripts\activate"
+REM run script
+python install.py
 
-REM Run the flet command
-flet run gui
+if %ERRORLEVEL%==0 (
+    REM run flet app
+    py -3.10 run.py
+) else if %ERRORLEVEL%==1 (
+    echo EXIT CODE 1 - VENV ERROR || Failed to create virtual environment
+) else if %ERRORLEVEL%==2 (
+    echo EXIT CODE 2 - VERSION ERROR || Need python 3.10
+) else if %ERRORLEVEL%==3 (
+    echo EXIT CODE 3 - PIP ERROR || Error in packages installing 
+)
+
+pause

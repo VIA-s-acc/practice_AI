@@ -114,7 +114,7 @@ def main_page(page: ft.Page):
             info_text2.update()
             results_saved_path = results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)+'gray.jpg'
             labels_saved_path = labels_saved + '\\' + os.path.basename(path_to_img) + 'gray.txt'
-        help_text = ft.Text("Click 'Image' Button to see image\nClick 'Labels' Button to see labels\nClick 'New' Button to new process\nClick 'Lines' Button to see lines\nClick 'Help' Button to see help\nAll results and labels will be saved BaseDir\\runs\detect\predict* folder", italic=True)
+        help_text = ft.Text("Click 'Image' Button to see image\nClick 'Labels' Button to see labels\nClick 'New' Button to new process\nClick 'Lines' Button to see lines\nClick 'Help' Button to see help\nAll results and labels will be saved BaseDir\\runs\\detect\\predict* folder", italic=True)
         image_container = ft.Container(ft.Image(src=results_saved_path, fit=ft.ImageFit.CONTAIN), width=page.width, height=page.height*0.6, visible=True, expand= True)
         cl = ft.Column(spacing = 0.1, height= 0.5 * page.window.height, horizontal_alignment=ft.CrossAxisAlignment.CENTER, width=page.window.width * 1, scroll = ft.ScrollMode.ALWAYS)
         cl_img = ft.Column(spacing = 0.5, height= 0.5 * page.window.height, horizontal_alignment=ft.CrossAxisAlignment.CENTER, width=page.window.width * 1, scroll = ft.ScrollMode.ALWAYS)
@@ -209,7 +209,7 @@ def main_page(page: ft.Page):
                         if os.path.exists(saved):
                             for file in os.listdir(saved):
                                 count += 1       
-                            pr_text.value = f'Extracting lines... Boxes extracted : {indx}\\{count}'
+                            pr_text.value = f'Extracting lines... Boxes extraction : {indx}\\{count}'
                             pr.update()
                             for file in os.listdir(saved):
                                 if file.endswith('png') or file.endswith('jpg') or file.endswith('jpeg'): 
@@ -222,7 +222,7 @@ def main_page(page: ft.Page):
                                     if result_saved_at == None:
                                         continue
                                     indx+=1
-                                    pr_text.value = f'Extracting lines... Boxes extracted : {indx}\\{count}'
+                                    pr_text.value = f'Extracting lines... Boxes extraction : {indx}\\{count}'
                                     pr.update()
                                     paths.append(result_saved_at[4:len(result_saved_at)-4] + '\\' + file)
                         for path in paths:
