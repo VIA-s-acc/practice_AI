@@ -1,12 +1,18 @@
 @echo off
 
 
+
 REM run script
 python install.py
 
 if %ERRORLEVEL%==0 (
+
+    REM Activate the virtual environment
+    call ".venv\Scripts\activate.bat"
+
     REM run flet app
     py -3.10 run.py
+    
 ) else if %ERRORLEVEL%==1 (
     echo EXIT CODE 1 - VENV ERROR || Failed to create virtual environment
 ) else if %ERRORLEVEL%==2 (
