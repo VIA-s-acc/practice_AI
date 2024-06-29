@@ -3,7 +3,7 @@
 ## Download Models 
 
 - Download the best model for Text Blocks: `best100_yolov8x_tboxLast.pt` from [Block](https://disk.yandex.ru/d/uwO2DrmJ5O3wyA)
-- Download the best model for Text Lines : `100yolov8_line.pt` from [Line](https://disk.yandex.ru/d/uwO2DrmJ5O3wyA)
+- Download the best model for Text Lines : `100yolov8_line.pt` from [Line](https://disk.yandex.ru/d/oF0aKJtwkk8WLw)
 
 
 ## With GUI
@@ -59,5 +59,5 @@
    `path to image` should be replaced with the path to the image you want to predict.
    `conf` should be replaced with the desired confidence level.
    results will be saved in `runs\detect\predict{k}` folder.
-   
+
 
