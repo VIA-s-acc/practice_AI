@@ -1,9 +1,17 @@
 ### Python Code Execution Guide
 
+## Download Models 
+
+- Download the best model for Text Blocks: `best100_yolov8x_tboxLast.pt` from [Block](https://disk.yandex.ru/d/uwO2DrmJ5O3wyA)
+- Download the best model for Text Lines : `100yolov8_line.pt` from [Line](https://disk.yandex.ru/d/uwO2DrmJ5O3wyA)
+
+
+## With GUI
+
 1. **Clone the Repository**
    - Clone the repository to your local machine:
      ```bash
-     git clone <repository_url>
+     git clone git@github.com:VIA-s-acc/practice_AI.git
      ```
 
 2. **Navigate to the Repository**
@@ -25,3 +33,31 @@
 
 5. **Adjust as Necessary**
    - If there are errors, review the logs or console output for guidance on how to resolve them.
+
+## With Terminal
+
+1. **Clone the Repository**
+   - Clone the repository to your local machine:
+     ```bash
+     git clone git@github.com:VIA-s-acc/practice_AI.git
+     ```
+
+2. **Navigate to the Repository**
+   - Open a terminal or command prompt.
+   - Change directory to the cloned repository:
+     ```bash
+     cd path/to/your/local/repository
+     ```
+   Replace `cd path/to/your/local/repository` with the actual path where your repository is located.
+
+3. **Run**
+   - run start command:
+   ```bash
+   yolo task=detect mode=predict model=`path to model` conf=0.6 source=`path to image` line_width=5 save_txt=true       
+   ```
+   `path to model` should be replaced with the path to the downloaded model.
+   `path to image` should be replaced with the path to the image you want to predict.
+   `conf` should be replaced with the desired confidence level.
+   results will be saved in `runs\detect\predict{k}` folder.
+   
+

@@ -1,1 +1,1 @@
-{"theme": "DARK", "path_to_model": "C:\\practice\\models\\best\\best100_yolov8x_tboxLast.pt", "path_to_img": "C:\\Users\\akhro\\Downloads\\1550326577117886518.jpg", "path_to_model_line": "C:\\practice\\models\\best\\100yolov8_line.pt", "conf": 0.7}
+{"theme": "LIGHT", "path_to_model": "", "path_to_img": "", "path_to_model_line": "", "conf": 0.5}
