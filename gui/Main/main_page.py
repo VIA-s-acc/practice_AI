@@ -226,6 +226,7 @@ def main_page(page: ft.Page):
                                     pr_text.value = f'Extracting lines... Boxes extraction : {indx}\\{count}'
                                     pr.update()
                                     paths.append(result_saved_at[4:len(result_saved_at)-4] + '\\' + file)
+                        cl_img.controls.clear()
                         for path in paths:
                             cl_img.controls.append(ft.Image(src=path, fit=ft.ImageFit.CONTAIN))
                             
