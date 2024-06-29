@@ -55,9 +55,9 @@
    ```bash
    yolo task=detect mode=predict model=`path to model` conf=0.6 source=`path to image` line_width=5 save_txt=true       
    ```
-   `path to model` should be replaced with the path to the downloaded model.
-   `path to image` should be replaced with the path to the image you want to predict.
-   `conf` should be replaced with the desired confidence level.
-   results will be saved in `runs\detect\predict{k}` folder.
+   - `path to model` should be replaced with the path to the downloaded model.
+   - `path to image` should be replaced with the path to the image you want to predict.
+   - `conf` should be replaced with the desired confidence level.
+   - results will be saved in `runs\detect\predict{k}` folder.
 
 
