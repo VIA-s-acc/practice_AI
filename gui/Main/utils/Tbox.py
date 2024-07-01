@@ -47,9 +47,17 @@ class TboxGenerator:
         elif self.mode == 'OBB':
             for i, coord in enumerate(labels):
                 x1, y1, x2, y2, x3, y3, x4, y4 = map(float, coord.split())
-                polygon = np.array([(x1, y1), (x2, y2), (x3, y3), (x4, y4)], np.int32)
-                roi = cv2.polylines(img, [polygon], True, (0, 255, 0), 2)
-                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), roi)
+                x1, x2, x3, x4 = x1 * width, x2 * width, x3 * width, x4 * width
+                y1, y2, y3, y4 = y1 * height, y2 * height, y3 * height, y4 * height
+                mask = np.zeros(img.shape, dtype=np.uint8)
+                roi_corners = np.array([[(x1, y1), (x2, y2), (x3, y3), (x4, y4)]], dtype=np.int32)
+                channel_count = img.shape[2]
+                ignore_mask_color = (255,)*channel_count
+                cv2.fillConvexPoly(mask, roi_corners, ignore_mask_color)
+                masked_image = cv2.bitwise_and(img, mask)
+
+
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), masked_image)
                 
         return self.path_to_save        
         

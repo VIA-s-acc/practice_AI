@@ -190,6 +190,7 @@ def main_page(page: ft.Page):
                     page.add(pr)
                     pr_text.value = "Extracting boxes... "
                     pr.update() 
+                    await asyncio.sleep(0.1)
                     try:
                         saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\', mode = 'Detect').generate()
                         paths = []
@@ -232,6 +233,7 @@ def main_page(page: ft.Page):
                         page.add(roi_container)
                         page.update()
                     except:
+                        try_remove(pr)
                         page.add(error_text)
                 else:
                     page.add(not_found_text)
