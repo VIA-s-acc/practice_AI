@@ -4,8 +4,6 @@ from Main.main_page import main_page
 import os
 import json
 
-
-
 def main(page: ft.Page):
     page.adaptive = True
     this_directory = os.path.dirname(os.path.abspath(__file__))

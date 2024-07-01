@@ -1,6 +1,8 @@
 import cv2
 import os
 import numpy as np
+from PIL import Image
+
 class TboxGenerator:
     def __init__(self, path_to_img, path_to_labels, path_to_save, mode = 'OBB'):
         self.path_to_img = path_to_img
@@ -10,7 +12,6 @@ class TboxGenerator:
         if mode not in ['OBB', 'Detect']:
             raise ValueError('mode should be OBB or Detect')
         
-    
     def generate(self) -> str | bool:
         if not os.path.exists(self.path_to_save):
             os.mkdir(self.path_to_save)        
@@ -55,9 +56,13 @@ class TboxGenerator:
                 ignore_mask_color = (255,)*channel_count
                 cv2.fillConvexPoly(mask, roi_corners, ignore_mask_color)
                 masked_image = cv2.bitwise_and(img, mask)
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), cropped_image)
+                cropped = Image.open(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
+                bbox = cropped.getbbox()
+                croppeed_image = cropped.crop(bbox)
+                croppeed_image.save(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
+                
 
-
-                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), masked_image)
                 
         return self.path_to_save        
         
