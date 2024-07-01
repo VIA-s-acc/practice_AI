@@ -94,11 +94,8 @@ def main_page(page: ft.Page):
         pr = ft.Column([ft.ProgressRing(scale = 0.5, height=page.window.height* 0.5, width = page.window.width * 0.5, stroke_align=1, stroke_cap=5, stroke_width=20), pr_text], horizontal_alignment=ft.CrossAxisAlignment.CENTER, alignment=ft.MainAxisAlignment.CENTER, spacing = 10)
         page.add(pr)
         page.update()
-        img = cv2.imread(path_to_img)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        cv2.imwrite(path_to_img+'gray.jpg', img)
         await asyncio.sleep(0.1)
-        res = subprocess.run(["yolo", "task=detect", "mode=predict", f"model={path_to_model}", f"conf={conf}", f"source={path_to_img+'gray.jpg'}", "line_width=5", "save_txt=true"], shell=True, capture_output=True, text=True)
+        res = subprocess.run(["yolo", "task=detect", "mode=predict", f"model={path_to_model}", f"conf={conf}", f"source={path_to_img}", "line_width=5", "save_txt=true"], shell=True, capture_output=True, text=True)
         results_saved_pattern = r'Results saved to (.+)'
         labels_saved_pattern = r'label saved to (.+)'
         match_results_saved = re.search(results_saved_pattern, res.stdout)
@@ -109,12 +106,12 @@ def main_page(page: ft.Page):
             results_saved = match_results_saved.group(1)
             labels_saved = match_labels_saved.group(1)
             filename = os.path.basename(path_to_img).split('.')[0]
-            info_text1.value = "Results saved to: " + results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)+'gray.jpg'
+            info_text1.value = "Results saved to: " + results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)
             info_text1.update()
             info_text2.value = "Labels saved to: " + labels_saved + '\\' + os.path.basename(path_to_img)
             info_text2.update()
-            results_saved_path = results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)+'gray.jpg'
-            labels_saved_path = labels_saved + '\\' + os.path.basename(path_to_img) + 'gray.txt'
+            results_saved_path = results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)
+            labels_saved_path = labels_saved + '\\' + os.path.basename(path_to_img)
         help_text = ft.Text("Click 'Image' Button to see image\nClick 'Labels' Button to see labels\nClick 'New' Button to new process\nClick 'Lines' Button to see lines\nClick 'Help' Button to see help\nAll results and labels will be saved BaseDir\\runs\\detect\\predict* folder", italic=True)
         image_container = ft.Container(ft.Image(src=results_saved_path, fit=ft.ImageFit.CONTAIN), width=page.width, height=page.height*0.6, visible=True, expand= True)
         cl = ft.Column(spacing = 0.1, height= 0.5 * page.window.height, horizontal_alignment=ft.CrossAxisAlignment.CENTER, width=page.window.width * 1, scroll = ft.ScrollMode.ALWAYS)

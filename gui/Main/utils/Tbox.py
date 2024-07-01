@@ -37,8 +37,7 @@ class TboxGenerator:
         for i, coord in enumerate(labels):
             x1, y1, x2, y2 = relative_to_absolute(coord, width, height)
             cropped_image = img[y1:y2, x1:x2]
-            gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
-            cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), gray)
+            cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), cropped_image)
         
         return self.path_to_save        
         
