@@ -111,7 +111,7 @@ def main_page(page: ft.Page):
             info_text2.value = "Labels saved to: " + labels_saved + '\\' + os.path.basename(path_to_img)
             info_text2.update()
             results_saved_path = results_saved[4:len(results_saved)-4] + '\\' + os.path.basename(path_to_img)
-            labels_saved_path = labels_saved + '\\' + os.path.basename(path_to_img) + '.txt'
+            labels_saved_path = labels_saved + '\\' + filename + '.txt'
         help_text = ft.Text("Click 'Image' Button to see image\nClick 'Labels' Button to see labels\nClick 'New' Button to new process\nClick 'Lines' Button to see lines\nClick 'Help' Button to see help\nAll results and labels will be saved BaseDir\\runs\\detect\\predict* folder", italic=True)
         image_container = ft.Container(ft.Image(src=results_saved_path, fit=ft.ImageFit.CONTAIN), width=page.width, height=page.height*0.6, visible=True, expand= True)
         cl = ft.Column(spacing = 0.1, height= 0.5 * page.window.height, horizontal_alignment=ft.CrossAxisAlignment.CENTER, width=page.window.width * 1, scroll = ft.ScrollMode.ALWAYS)
