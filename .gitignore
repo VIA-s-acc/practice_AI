@@ -8,7 +8,7 @@
 /Dataset
 *.pyc
 *.xml
-*.txt
+*[^requirements]*.txt
 *.jpg
 *.yaml
 *.pt
