@@ -56,10 +56,11 @@ class TboxGenerator:
                 ignore_mask_color = (255,)*channel_count
                 cv2.fillConvexPoly(mask, roi_corners, ignore_mask_color)
                 masked_image = cv2.bitwise_and(img, mask)
-                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), cropped_image)
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), masked_image)
                 cropped = Image.open(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
                 bbox = cropped.getbbox()
                 croppeed_image = cropped.crop(bbox)
+                Image._show(croppeed_image)
                 croppeed_image.save(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
                 
 
