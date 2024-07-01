@@ -61,3 +61,36 @@
    - results will be saved in `runs\detect\predict{k}` folder.
 
 
+## Train 
+
+###
+
+   - create `dataset.yaml` file
+   ```yaml
+   # dataset.yaml example
+   train: #path to train data ( folder with folders images and labels)
+   val: # path to validate data
+   # test: # path to test data ( non required )
+
+   # classes
+   nc: 1  #  class number
+   names: ['tbox']  #  class names
+   ```
+   - run train command
+   ```bash
+   yolo task=detect mode=train model=yolov8m.pt data="path to dataset.yaml" epochs=10 imgsz=640 batch=8 project=(path to result) name="name"  
+   ```
+      - task= detect: detect mode
+      - task= segment: segment mode
+      - task= classify: classify mode
+      - task= Pose: pose mode
+      - task= OBB: object detection bounding box mode
+      - batch: batch size
+      - epochs: number of epochs
+      - imgsz: image size
+      - name: name of the model
+      - project: path to result
+      - data: path to dataset.yaml
+      - model: path to model
+
+
