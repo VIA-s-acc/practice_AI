@@ -2,6 +2,7 @@
 
 ## Download Models 
 
+### Future Update (NOT WORKING)
 - Download the best model for Text Blocks and Lines from: [Models](https://disk.yandex.ru/d/xP_VxJ5_Kd4cVA)
    - For TextBlocks OBB download `TextBlock-OBB.pt`
    - For TextBlocks Detect download `TextBlock-detect.pt`
