@@ -32,6 +32,7 @@ class TboxGenerator:
             y1 = int(y_center - box_height / 2)
             x2 = int(x_center + box_width / 2)
             y2 = int(y_center + box_height / 2)
+
             return x1, y1, x2, y2
         
         for i, coord in enumerate(labels):
