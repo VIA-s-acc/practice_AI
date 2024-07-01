@@ -95,7 +95,7 @@ def main_page(page: ft.Page):
         page.add(pr)
         page.update()
         await asyncio.sleep(0.1)
-        res = subprocess.run(["yolo", "task=detect", "mode=predict", f"model={path_to_model}", f"conf={conf}", f"source={path_to_img}", "line_width=5", "save_txt=true"], shell=True, capture_output=True, text=True)
+        res = subprocess.run(["yolo", "task=obb", "mode=predict", f"model={path_to_model}", f"conf={conf}", f"source={path_to_img}", "line_width=5", "save_txt=true"], shell=True, capture_output=True, text=True)
         results_saved_pattern = r'Results saved to (.+)'
         labels_saved_pattern = r'label saved to (.+)'
         match_results_saved = re.search(results_saved_pattern, res.stdout)
@@ -191,7 +191,7 @@ def main_page(page: ft.Page):
                     pr_text.value = "Extracting boxes... "
                     pr.update() 
                     try:
-                        saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\').generate()
+                        saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\', mode = 'OBB').generate()
                         paths = []
                         
                         if saved == False:
@@ -213,7 +213,7 @@ def main_page(page: ft.Page):
                                 if file.endswith('png') or file.endswith('jpg') or file.endswith('jpeg'): 
                                     file_path = saved + "\\" + file
                                     await asyncio.sleep(0.1)                           
-                                    res = subprocess.run(["yolo", "task=detect", "mode=predict", f"model={path_to_model_line}", f"conf={conf}", f"source={file_path}", "line_width=1", "save_txt=true"], shell=True, capture_output=True, text=True)
+                                    res = subprocess.run(["yolo", "task=obb", "mode=predict", f"model={path_to_model_line}", f"conf={conf}", f"source={file_path}", "line_width=1", "save_txt=true"], shell=True, capture_output=True, text=True)
                                     result_saved_at = None
                                     if re.search(results_saved_pattern, res.stdout) is not None:
                                         result_saved_at = re.search(results_saved_pattern, res.stdout).group(1)

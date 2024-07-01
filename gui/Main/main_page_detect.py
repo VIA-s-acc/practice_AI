@@ -191,7 +191,7 @@ def main_page(page: ft.Page):
                     pr_text.value = "Extracting boxes... "
                     pr.update() 
                     try:
-                        saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\').generate()
+                        saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\', mode = 'Detect').generate()
                         paths = []
                         
                         if saved == False:

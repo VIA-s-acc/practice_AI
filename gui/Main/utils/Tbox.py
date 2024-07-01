@@ -1,10 +1,14 @@
 import cv2
 import os
+import numpy as np
 class TboxGenerator:
-    def __init__(self, path_to_img, path_to_labels, path_to_save):
+    def __init__(self, path_to_img, path_to_labels, path_to_save, mode = 'OBB'):
         self.path_to_img = path_to_img
         self.path_to_labels = path_to_labels
         self.path_to_save = path_to_save
+        self.mode = mode
+        if mode not in ['OBB', 'Detect']:
+            raise ValueError('mode should be OBB or Detect')
         
     
     def generate(self) -> str | bool:
@@ -34,12 +38,19 @@ class TboxGenerator:
             y2 = int(y_center + box_height / 2)
 
             return x1, y1, x2, y2
+        if self.mode == 'Detect':
+            for i, coord in enumerate(labels):
+                x1, y1, x2, y2 = relative_to_absolute(coord, width, height)
+                cropped_image = img[y1:y2, x1:x2]
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), cropped_image)
         
-        for i, coord in enumerate(labels):
-            x1, y1, x2, y2 = relative_to_absolute(coord, width, height)
-            cropped_image = img[y1:y2, x1:x2]
-            cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), cropped_image)
-        
+        elif self.mode == 'OBB':
+            for i, coord in enumerate(labels):
+                x1, y1, x2, y2, x3, y3, x4, y4 = map(float, coord.split())
+                polygon = np.array([(x1, y1), (x2, y2), (x3, y3), (x4, y4)], np.int32)
+                roi = cv2.polylines(img, [polygon], True, (0, 255, 0), 2)
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), roi)
+                
         return self.path_to_save        
         
 
