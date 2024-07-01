@@ -4,12 +4,12 @@
 
 ### Future Update (NOT WORKING)
 - Download the best model for Text Blocks and Lines from: [Models](https://disk.yandex.ru/d/xP_VxJ5_Kd4cVA)
-   - For TextBlocks OBB download `TextBlock-OBB.pt`
-   - For TextBlocks Detect download `TextBlock-detect.pt`
-   - For TextLines Detect download `TextLine-detect.pt`
-   - For TextLines OBB download `TextLine-OBB.pt`
+   - For *TextBlocks OBB* download `TextBlock-OBB.pt`
+   - For *TextBlocks Detect* download `TextBlock-detect.pt`
+   - For *TextLines Detect* download `TextLine-detect.pt`
+   - For *TextLines OBB* download `TextLine-OBB.pt`
 
-   - If use Detect mode change gui.main file 3 line from:
+   - If use *Detect* mode change `gui.main` file 3 line from:
    
    ```python
    from Main.main_page import main_page
@@ -19,8 +19,8 @@
    from Main.main_page_detect import main_page
    ```
 
-   - Standart mode will use OBB.
-   - Detect mode will not work with OBB.pt and OBB mode will not work with detect.pt model.
+   - *Standart* mode will use OBB.
+   - *Detect* mode will not work with `OBB.pt` and *OBB* mode will not work with `detect.pt` model.
 
 
 ## With GUI
