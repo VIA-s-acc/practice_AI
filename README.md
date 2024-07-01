@@ -9,11 +9,11 @@
       - For *TextBlocks OBB* download `TextBlock-OBB.pt`
       - For *TextBlocks Detect* download `TextBlock-detect.pt`
       - For *TextLines Detect* download `TextLine-detect.pt`
-      - For *TextLines OBB* download `TextLine-OBB.pt`
+      - For *TextLines OBB* download `TextLine-OBB.pt` ( IN FUTURE )
 
    - insructions for changing to old version
 
-      - If use *Detect* mode change `gui.main` file 3 line from:
+      - For use *Detect* mode change `gui.main` file 3 line from:
       
       ```python
       from Main.main_page import main_page
