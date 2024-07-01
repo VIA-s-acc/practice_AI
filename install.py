@@ -1,7 +1,6 @@
 import subprocess
 import traceback
 import os
-import sys
 import string
 
 EXIT_CODES = {

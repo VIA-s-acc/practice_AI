@@ -7,8 +7,7 @@ import asyncio
 import re
 import pyperclip
 from .utils.Tbox import TboxGenerator
-import cv2
-import time
+
 
 def main_page(page: ft.Page):
 
