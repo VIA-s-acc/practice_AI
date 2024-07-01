@@ -51,9 +51,3 @@ class XMLToYOLOConverter:
         print(f"Converted {xml_path} to {txt_path}")
 
 
-# Пример использования:
-xml_folder = 'Dataset'
-output_folder = 'Data'
-
-converter = XMLToYOLOConverter(xml_folder, output_folder, obj_class='line')
-converter.convert()

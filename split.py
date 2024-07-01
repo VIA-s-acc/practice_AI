@@ -3,7 +3,7 @@ import shutil
 import random
 from tqdm import tqdm
 import cv2
-
+import numpy as np
 train_path_img = './Train/images'
 train_path_label = './Train/labels'
 val_path_img = './Val/images'
@@ -101,4 +101,92 @@ def resize_all(path, size):
             img = cv2.resize(img, size)
             cv2.imwrite(path+'\\'+filename, img)
 
-train_test_split('gray/', None, 0.2)
+
+def cxcyhw_to_x1xn1x2yn2(path_to_labels):
+    for file in os.listdir(path_to_labels):
+        if file.endswith('.txt'):
+            with open(os.path.join(path_to_labels, file), 'r+') as f:
+                lines = f.readlines()
+                new_lines = []
+                for line in lines:
+                    class_id, cx,cy,w,h = map(float, line.strip().split())
+                    x1 = cx - w/2
+                    y1 = cy - h/2
+                    x2 = cx + w/2
+                    y2 = cy - h/2
+                    x3 = cx + w/2
+                    y3 = cy + h/2
+                    x4 = cx - w/2
+                    y4 = cy + h/2
+                    new_lines.append(f"{int(class_id)} {x1} {y1} {x2} {y2} {x3} {y3} {x4} {y4}\n")
+                f.seek(0)
+                f.writelines(new_lines)
+                f.truncate()
+
+            
+def augment_data(patg):
+    
+    angles = [5, 10, 15, 20]
+    files = os.listdir(patg)
+    counter = 0
+    coutn = len(files)//2
+    for filename in files:
+        if filename.endswith('.jpg'):
+            counter += 1  
+            print(f'{counter}/{coutn}')
+ 
+            for angle in angles:
+                img = cv2.imread(patg+'\\'+filename)
+                img, rot_mat = rotate_image(img, angle)
+                cv2.imwrite(patg+'\\'+filename.split('.')[0]+'_'+str(angle)+'.jpg', img)
+                text_file = open(patg+'\\'+filename.split('.')[0]+'.txt')
+                with open(patg+'\\'+filename.split('.')[0] + '.txt', "r") as text_file:
+                    lines = text_file.readlines()             
+                append = []
+                with open(patg+'\\'+filename.split('.')[0] + '_' + str(angle) + '.txt', "a") as text_file:
+                    for line in lines:
+                        class_id, x1, y1, x2, y2, x3, y3, x4, y4 = map(float, line.strip().split())
+                        class_id = int(class_id)
+                        rx1, ry1 = rotate_point(x1 * img.shape[1], y1 * img.shape[0], rot_mat)
+                        rx2, ry2 = rotate_point(x2 * img.shape[1], y2 * img.shape[0], rot_mat)
+                        rx3, ry3 = rotate_point(x3 * img.shape[1], y3 * img.shape[0], rot_mat)
+                        rx4, ry4 = rotate_point(x4 * img.shape[1], y4 * img.shape[0], rot_mat)
+                        # normalize
+                        rx1 = rx1 / img.shape[1]
+                        ry1 = ry1 / img.shape[0]
+                        rx2 = rx2 / img.shape[1]
+                        ry2 = ry2 / img.shape[0]
+                        rx3 = rx3 / img.shape[1]
+                        ry3 = ry3 / img.shape[0]
+                        rx4 = rx4 / img.shape[1]
+                        ry4 = ry4 / img.shape[0]
+                        
+                        append.append(f"{class_id} {rx1} {ry1} {rx2} {ry2} {rx3} {ry3} {rx4} {ry4}\n")
+                    text_file.writelines(append)
+                    text_file.close()       
+                    append.clear()
+                 
+                    
+def rotate_image(image, angle):
+    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+    rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+    result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+    return result, rot_mat
+
+                
+                
+def rotate_point(x, y, rot_mat):
+    point = np.array([x, y, 1]).reshape((3, 1))
+    rotated_point = np.dot(rot_mat, point)
+    return rotated_point[0, 0], rotated_point[1, 0]
+
+print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
+cxcyhw_to_x1xn1x2yn2('data\\')
+print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
+print("------ RESIZE STARTED -------")
+resize_all('data\\', (640, 640))
+print("------ RESIZE ENDED -------")
+print("------ AUGMENTATION STARTED -------")
+augment_data('data\\')
+print("------ AUGMENTATION ENDED -------")
+train_test_split('data\\')
