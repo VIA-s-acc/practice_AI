@@ -9,7 +9,7 @@
       - For *TextBlocks OBB* download `TextBlock-OBB.pt`
       - For *TextBlocks Detect* download `TextBlock-detect.pt`
       - For *TextLines Detect* download `TextLine-detect.pt`
-      - For *TextLines OBB* download `TextLine-OBB.pt` ( IN FUTURE )
+      - For *TextLines OBB* download `TextLine-OBB.pt` 
 
    - insructions for changing to old version
 

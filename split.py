@@ -180,13 +180,24 @@ def rotate_point(x, y, rot_mat):
     rotated_point = np.dot(rot_mat, point)
     return rotated_point[0, 0], rotated_point[1, 0]
 
-print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
+def blur_all(path):
+    for filename in os.listdir(path):
+        if filename.endswith('.jpg'):
+            img = cv2.imread(path+'\\'+filename)
+            img = cv2.GaussianBlur(img, (5, 5), 0)
+            cv2.imwrite(path+'\\'+filename, img)
+            
+
+
+
 cxcyhw_to_x1xn1x2yn2('data\\')
-print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
-print("------ RESIZE STARTED -------")
-resize_all('data\\', (640, 640))
-print("------ RESIZE ENDED -------")
-print("------ AUGMENTATION STARTED -------")
-augment_data('data\\')
-print("------ AUGMENTATION ENDED -------")
-train_test_split('data\\')
+# print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
+# cxcyhw_to_x1xn1x2yn2('data\\')
+# print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
+# print("------ RESIZE STARTED -------")
+# resize_all('data\\', (640, 640))
+# print("------ RESIZE ENDED -------")
+# print("------ AUGMENTATION STARTED -------")
+# augment_data('data\\')
+# print("------ AUGMENTATION ENDED -------")
+# train_test_split('data\\')

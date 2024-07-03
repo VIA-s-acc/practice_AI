@@ -193,7 +193,8 @@ def main_page(page: ft.Page):
                     try:
                         saved = TboxGenerator(path_to_img=path_to_img, path_to_labels=labels_saved_path, path_to_save=match_labels_saved.group(1)+'\\tbox\\', mode = 'Detect').generate()
                         paths = []
-                        
+                        #Useless code
+                        """
                         if saved == False:
                             def remove_label_text():
                                 try_remove(label_not_found_text)
@@ -203,6 +204,7 @@ def main_page(page: ft.Page):
                             page.add(label_not_found_text)
                             threading.Timer(2, remove_label_text).start()
                             return
+                        """
                         
                         if os.path.exists(saved):
                             for file in os.listdir(saved):

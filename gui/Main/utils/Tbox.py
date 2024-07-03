@@ -19,7 +19,8 @@ class TboxGenerator:
         img = cv2.imread(self.path_to_img)
         labels = open(self.path_to_labels).read().strip().split('\n')
         if labels[0] == "No labels found":
-            return False
+            cv2.imwrite(os.path.join(self.path_to_save, f'tbox.jpg'), img)
+            return self.path_to_save
         
         for i in range(len(labels)):
             labels[i] = labels[i][2:]
@@ -60,7 +61,6 @@ class TboxGenerator:
                 cropped = Image.open(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
                 bbox = cropped.getbbox()
                 croppeed_image = cropped.crop(bbox)
-                Image._show(croppeed_image)
                 croppeed_image.save(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
                 
 

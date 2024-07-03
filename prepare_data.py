@@ -50,4 +50,6 @@ class XMLToYOLOConverter:
 
         print(f"Converted {xml_path} to {txt_path}")
 
-
+    
+converter = XMLToYOLOConverter('labels/', 'data/', obj_class='line')
+converter.convert()
