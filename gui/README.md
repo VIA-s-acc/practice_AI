@@ -1,9 +1,6 @@
-# A gui Flet app
+# Gui for Model Using
 
-An example of a minimal Flet app.
-
-To run the app:
-
-```
-flet run [app_directory]
+## Run
+```bash
+python -m gui.main
 ```
