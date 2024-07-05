@@ -4,18 +4,20 @@ import random
 from tqdm import tqdm
 import cv2
 import numpy as np
-train_path_img = './Train/images'
-train_path_label = './Train/labels'
-val_path_img = './Val/images'
-val_path_label = './Val/labels'
-test_path_img = './Test'
+from PIL import Image
+
+train_path_img = '.\\Train\\images'
+train_path_label = '.\\Train\\labels'
+val_path_img = '.\\Val\\images'
+val_path_label = '.\\Val\\labels'
+test_path_img = '.\\Test'
 
 '''
 Split the dataset into train and test and creates the train.txt and test.tx with
 the respective path of the images in each folder
 '''
 
-def train_test_split(path,neg_path=None, split = 0.2):
+def train_test_split(path,neg_path=None, split = 0.2, train_path_img=train_path_img, train_path_label=train_path_label, val_path_img=val_path_img, val_path_label=val_path_label, test_path_img=test_path_img):
     print("------ PROCESS STARTED -------")
 
 
@@ -75,10 +77,9 @@ def train_test_split(path,neg_path=None, split = 0.2):
     
     print("------ TASK COMPLETED -------")
 
-def convert_tif_to_jpg(path):
-    from PIL import Image
+def convert_to_jpg(path):
     for filename in os.listdir(path):
-        if filename.endswith('.tif') or filename.endswith('.tif'):
+        if filename.endswith('.tif') or filename.endswith('.png') or filename.endswith('.jpeg') or filename.endswith('.JPEG') or filename.endswith('.PNG') or filename.endswith('.JPEG'):
             img = Image.open(path+filename)
             img.save(path+filename.split('.')[0]+'.jpg', 'JPEG', quality=100) 
             os.remove(path+filename)
@@ -99,6 +100,13 @@ def resize_all(path, size):
         if filename.endswith('.jpg'):
             img = cv2.imread(path+'\\'+filename)
             img = cv2.resize(img, size)
+            cv2.imwrite(path+'\\'+filename, img)
+
+def grayscale_all(path):
+    for filename in os.listdir(path):
+        if filename.endswith('.jpg') or filename.endswith('.png') or filename.endswith('.jpeg') or filename.endswith('.JPG') or filename.endswith('.JPEG') or filename.endswith('.PNG'):
+            img = cv2.imread(path+'\\'+filename)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             cv2.imwrite(path+'\\'+filename, img)
 
 
@@ -189,15 +197,16 @@ def blur_all(path):
             
 
 
-
-cxcyhw_to_x1xn1x2yn2('data\\')
-# print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
-# cxcyhw_to_x1xn1x2yn2('data\\')
-# print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
-# print("------ RESIZE STARTED -------")
-# resize_all('data\\', (640, 640))
-# print("------ RESIZE ENDED -------")
-# print("------ AUGMENTATION STARTED -------")
-# augment_data('data\\')
-# print("------ AUGMENTATION ENDED -------")
-# train_test_split('data\\')
+if __name__ == '__main__':
+    pass
+    # cxcyhw_to_x1xn1x2yn2('data\\')
+    # print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
+    # cxcyhw_to_x1xn1x2yn2('data\\')
+    # print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
+    # print("------ RESIZE STARTED -------")
+    # resize_all('data\\', (640, 640))
+    # print("------ RESIZE ENDED -------")
+    # print("------ AUGMENTATION STARTED -------")
+    # augment_data('data\\')
+    # print("------ AUGMENTATION ENDED -------")
+    # train_test_split('data\\')

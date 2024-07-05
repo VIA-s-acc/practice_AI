@@ -13,6 +13,7 @@ class XMLToYOLOConverter:
     def convert(self):
         for xml_file in os.listdir(self.xml_folder):
             if xml_file.endswith('.xml'):
+                print(xml_file)
                 xml_path = os.path.join(self.xml_folder, xml_file)
                 self.convert_xml_to_yolo(xml_path)
 
@@ -50,6 +51,6 @@ class XMLToYOLOConverter:
 
         print(f"Converted {xml_path} to {txt_path}")
 
-    
-converter = XMLToYOLOConverter('labels/', 'data/', obj_class='line')
-converter.convert()
+if __name__ == '__main__':    
+    converter = XMLToYOLOConverter('labels/', 'data/', obj_class='line')
+    converter.convert()
