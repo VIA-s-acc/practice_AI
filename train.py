@@ -25,16 +25,18 @@ def parse_args(args):
     parser.add_argument('-m', '-model', type=str, required=True,help='path to .pt model')
     parser.add_argument('-ts', '-test', type=str, required=False, default=None, help='(Optional) path to test folder (will used to save test images and labels)')
     parser.add_argument('-b', '-batch', type=int, required=False, default=8, help='batch size')
-    parser.add_argument('-ep', '-epochs', type=int, required=False, default=10, help='number of epochs')
+    parser.add_argument('-e', '-ep', '-epochs', type=int, required=False, default=10, help='number of epochs')
     parser.add_argument('-d', '-device', type=str, required=False, default='default', help='device (cuda or cpu | default: cuda if available)')
     parser.add_argument('-w', '-workers', type=int, required=False, default=8, help='number of workers')
+    parser.add_argument('-n', '-name', type=str, required=False, default='tbox', help='name of project')
+    parser.add_argument('-p', '-project', type=str, required=False, default='res', help='save folder')
     parser.add_argument('-imgsz', type=int, required=False, default=640, help='image size')
     
 
     return parser.parse_args(args)
 
 @logger.catch
-def prepare_data(source, train, val, test, model, device, workers, imgsz, batch, epochs):
+def prepare_data(source, train, val, test, model, device, workers, imgsz, batch, epochs, name, project):
     train = os.path.abspath(train) + '\\'
     val = os.path.abspath(val) + '\\'
     source = os.path.abspath(source) + '\\'
@@ -71,7 +73,7 @@ def prepare_data(source, train, val, test, model, device, workers, imgsz, batch,
     from ultralytics import YOLO
 
     model = YOLO(model)
-    model.train(data='dataset.yaml', epochs=epochs, imgsz=imgsz, batch=batch, project='res', name='tbox', device=device, workers=workers)
+    model.train(data='dataset.yaml', epochs=epochs, imgsz=imgsz, batch=batch, device=device, workers=workers, name= name, project=project)
     
                     
 
@@ -90,5 +92,5 @@ def create_yaml(train, val, test, nc = 1, names = ['tbox']):
 
 if __name__ == '__main__':
     args = parse_args(sys.argv[1:])
-    prepare_data(source=args.s, train=args.t, val=args.v, test=args.ts, model=args.m, device=args.d, workers=args.w, imgsz=args.imgsz, batch=args.b, epochs=args.ep)
+    prepare_data(source=args.s, train=args.t, val=args.v, test=args.ts, model=args.m, device=args.d, workers=args.w, imgsz=args.imgsz, batch=args.b, epochs=args.e, name=args.n, project=args.p)
     

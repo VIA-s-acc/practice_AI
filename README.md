@@ -111,9 +111,9 @@
    ```
    
    - *`-src`* : path to folder with images and labels
-   - *`-train`* : path to train folder (will used to save train images and labels) | Default .\Train
-   - *`-val`* : path to val folder (will used to save val images and labels) | Default .\Val
-   - *`-test`* : path to test folder (will used to save test images and labels) | (Optional)
+   - *`-train`* : path to train folder (will used to save train images and labels after split) | Default .\Train
+   - *`-val`* : path to val folder (will used to save val images and labels after split) | Default .\Val
+   - *`-test`* : path to test folder (will used to save test images and labels after split) | (Optional)
    - *`-model`* : path to .pt model | Default yolov8x.pt
    ---
    - ***`CLI`*** info: 
@@ -135,6 +135,8 @@
       -ep EP, -epochs EP    number of epochs | Default 10
       -d D, -device D       device (cuda or cpu | default: cuda if available) 
       -w W, -workers W      number of workers | Default 8
+      -n N, -name N         name of project
+      -p P, -project P      save folder
       -imgsz IMGSZ          image size | Default 640
       ```
       - If something goes wrong during the training process, try changing the device to **`'cpu'`** using the **`'-d cpu'`** option.
