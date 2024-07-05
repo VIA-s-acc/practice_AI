@@ -49,7 +49,7 @@ class XMLToYOLOConverter:
 
                 txt_file.write(f"0 {x_center} {y_center} {box_width} {box_height}\n")
 
-        print(f"Converted {xml_path} to {txt_path}")
+        # print(f"Converted {xml_path} to {txt_path}")
 
 if __name__ == '__main__':    
     converter = XMLToYOLOConverter('labels/', 'data/', obj_class='line')
