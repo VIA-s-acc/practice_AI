@@ -57,7 +57,7 @@ def prepare_data(source, train, val, test, model, device, workers, imgsz, batch,
         if action == 'convert_jpg':
             convert_to_jpg(source)
         if action == 'resize':
-            resize_all(source, (640, 640))
+            resize_all(source, (imgsz, imgsz))
         if action == 'grayscale':
             grayscale_all(source)
         if action == 'cxcyhw_to_x1xn1x2yn2':

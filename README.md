@@ -133,9 +133,9 @@
       -ts TS, -test TS      (Optional) path to test folder (will used to save test images and labels)
       -b B, -batch B        batch size | Default 8
       -ep EP, -epochs EP    number of epochs | Default 10
-      -d D, -device D       device (cuda or cpu | default: cuda if available)
-      -w W, -workers W      number of workers
-      -imgsz IMGSZ          image size
+      -d D, -device D       device (cuda or cpu | default: cuda if available) 
+      -w W, -workers W      number of workers | Default 8
+      -imgsz IMGSZ          image size | Default 640
       ```
       - If something goes wrong during the training process, try changing the device to **`'cpu'`** using the **`'-d cpu'`** option.
       - Requires `cuda 11.8` to use GPU
@@ -183,7 +183,7 @@
          </bndbox>
       </object>
       ```
-   - Script will resize all images to `(640, 640)`, covnert to grayscale, convert **`.xml (class_id,cx,cy,h,w)`** format to **`.txt (class_id,x1,y1,x2,y2,x3,y3,x4,y4)`** and run model train.
+   - Script will resize all images to `(imgsz, imgsz)`, covnert to grayscale, convert **`.xml (class_id,cx,cy,h,w)`** format to **`.txt (class_id,x1,y1,x2,y2,x3,y3,x4,y4)`** and run model train.
    ---
 #### Manual train
    - create data folders
