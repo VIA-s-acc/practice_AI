@@ -145,11 +145,11 @@
                pip uninstall torch torchvision
                ```
             2. Install correct version from [link](https://pytorch.org/)
-         - If still not working, try to install ***torchvision+cu+****:
+         - If still not working, try to install ***torchvision==0.18.1+cu****:
             ```bash
             pip install torchvision==0.18.1+cu118 -f https://download.pytorch.org/whl/torch_stable.html
             ```
-            - replace `+cu118` to your CUDA.
+            - replace `==0.18.1+cu118` to your version.
 
        
 
