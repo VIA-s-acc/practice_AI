@@ -6,11 +6,11 @@ import cv2
 import numpy as np
 from PIL import Image
 
-train_path_img = '.\\Train\\images'
-train_path_label = '.\\Train\\labels'
-val_path_img = '.\\Val\\images'
-val_path_label = '.\\Val\\labels'
-test_path_img = '.\\Test'
+train_path_img = './Train/images'
+train_path_label = './Train/labels'
+val_path_img = './Val/images'
+val_path_label = './Val/labels'
+test_path_img = './Test'
 
 '''
 Split the dataset into train and test and creates the train.txt and test.tx with
@@ -88,26 +88,26 @@ def move_all_ext_to(path, path_to, ext, to_gray=False):
     for filename in os.listdir(path):
         if filename.endswith(ext):
             if to_gray:
-                img_path = path+'\\'+filename
+                img_path = path+'/'+filename
                 img = cv2.imread(img_path)
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                cv2.imwrite(path_to+'\\'+filename, img)
+                cv2.imwrite(path_to+'/'+filename, img)
             else:
-                shutil.copy2(path+'\\'+filename, path_to+'\\'+filename)
+                shutil.copy2(path+'/'+filename, path_to+'/'+filename)
 
 def resize_all(path, size):
     for filename in os.listdir(path):
         if filename.endswith('.jpg'):
-            img = cv2.imread(path+'\\'+filename)
+            img = cv2.imread(path+'/'+filename)
             img = cv2.resize(img, size)
-            cv2.imwrite(path+'\\'+filename, img)
+            cv2.imwrite(path+'/'+filename, img)
 
 def grayscale_all(path):
     for filename in os.listdir(path):
         if filename.endswith('.jpg') or filename.endswith('.png') or filename.endswith('.jpeg') or filename.endswith('.JPG') or filename.endswith('.JPEG') or filename.endswith('.PNG'):
-            img = cv2.imread(path+'\\'+filename)
+            img = cv2.imread(path+'/'+filename)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            cv2.imwrite(path+'\\'+filename, img)
+            cv2.imwrite(path+'/'+filename, img)
 
 
 def cxcyhw_to_x1xn1x2yn2(path_to_labels):
@@ -144,14 +144,14 @@ def augment_data(patg):
             print(f'{counter}/{coutn}')
  
             for angle in angles:
-                img = cv2.imread(patg+'\\'+filename)
+                img = cv2.imread(patg+'/'+filename)
                 img, rot_mat = rotate_image(img, angle)
-                cv2.imwrite(patg+'\\'+filename.split('.')[0]+'_'+str(angle)+'.jpg', img)
-                text_file = open(patg+'\\'+filename.split('.')[0]+'.txt')
-                with open(patg+'\\'+filename.split('.')[0] + '.txt', "r") as text_file:
+                cv2.imwrite(patg+'/'+filename.split('.')[0]+'_'+str(angle)+'.jpg', img)
+                text_file = open(patg+'/'+filename.split('.')[0]+'.txt')
+                with open(patg+'/'+filename.split('.')[0] + '.txt', "r") as text_file:
                     lines = text_file.readlines()             
                 append = []
-                with open(patg+'\\'+filename.split('.')[0] + '_' + str(angle) + '.txt', "a") as text_file:
+                with open(patg+'/'+filename.split('.')[0] + '_' + str(angle) + '.txt', "a") as text_file:
                     for line in lines:
                         class_id, x1, y1, x2, y2, x3, y3, x4, y4 = map(float, line.strip().split())
                         class_id = int(class_id)
@@ -191,22 +191,22 @@ def rotate_point(x, y, rot_mat):
 def blur_all(path):
     for filename in os.listdir(path):
         if filename.endswith('.jpg'):
-            img = cv2.imread(path+'\\'+filename)
+            img = cv2.imread(path+'/'+filename)
             img = cv2.GaussianBlur(img, (5, 5), 0)
-            cv2.imwrite(path+'\\'+filename, img)
+            cv2.imwrite(path+'/'+filename, img)
             
 
 
 if __name__ == '__main__':
     pass
-    # cxcyhw_to_x1xn1x2yn2('data\\')
+    # cxcyhw_to_x1xn1x2yn2('data/')
     # print("------ CXCYHW TO X1XN1X2YN2 STARTED -------")
-    # cxcyhw_to_x1xn1x2yn2('data\\')
+    # cxcyhw_to_x1xn1x2yn2('data/')
     # print("------ CXCYHW TO X1XN1X2YN2 ENDED -------")
     # print("------ RESIZE STARTED -------")
-    # resize_all('data\\', (640, 640))
+    # resize_all('data/', (640, 640))
     # print("------ RESIZE ENDED -------")
     # print("------ AUGMENTATION STARTED -------")
-    # augment_data('data\\')
+    # augment_data('data/')
     # print("------ AUGMENTATION ENDED -------")
-    # train_test_split('data\\')
+    # train_test_split('data/')

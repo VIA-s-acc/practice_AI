@@ -22,7 +22,7 @@ colors = {
 
 def install(req_path = 'requirements.txt'):
     this_dir = os.path.dirname(os.path.abspath(__file__))
-    libs = subprocess.check_output([f"{this_dir}\\.venv\\Scripts\\pip", "list"]).decode().split('\n')
+    libs = subprocess.check_output([f"{this_dir}/.venv/Scripts/pip", "list"]).decode().split('\n')
     libs = libs[2:]
     
     for i in range(len(libs)):
@@ -44,7 +44,7 @@ def install(req_path = 'requirements.txt'):
         print(f"{colors['GREEN']}Virtual environment already exists ✅{colors['ENDC']}")
         print(f"{colors['BLUE']}Checking virtual environment python version...{colors['ENDC']}")
         
-        venv_python = os.path.join(f'{this_dir}\\.venv', 'Scripts', 'python.exe')
+        venv_python = os.path.join(f'{this_dir}/.venv', 'Scripts', 'python.exe')
         python_version = subprocess.check_output([venv_python, '--version'], shell=True, stderr=subprocess.DEVNULL).decode().strip()
         print(f"Virtual environment Python version: {python_version}")
         if not '3.10' in python_version:

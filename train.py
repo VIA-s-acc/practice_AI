@@ -37,14 +37,14 @@ def parse_args(args):
 
 @logger.catch
 def prepare_data(source, train, val, test, model, device, workers, imgsz, batch, epochs, name, project):
-    train = os.path.abspath(train) + '\\'
-    val = os.path.abspath(val) + '\\'
-    source = os.path.abspath(source) + '\\'
+    train = os.path.abspath(train) + '/'
+    val = os.path.abspath(val) + '/'
+    source = os.path.abspath(source) + '/'
     model = os.path.abspath(model)
     if device == 'default':
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
     if test is not None:
-        test = os.path.abspath(test) + '\\'
+        test = os.path.abspath(test) + '/'
     actions = ['convert', 'convert_jpg', 'resize', 'grayscale', 'cxcyhw_to_x1xn1x2yn2', 'train_test_split', 'create_yaml','']
     
     for action, i in zip(actions, tqdm(range(7))):
@@ -65,7 +65,7 @@ def prepare_data(source, train, val, test, model, device, workers, imgsz, batch,
         if action == 'cxcyhw_to_x1xn1x2yn2':
             cxcyhw_to_x1xn1x2yn2(source)
         if action == 'train_test_split':
-            train_test_split(path=source, neg_path=None, split=0.2, train_path_img=train+'\\images', train_path_label=train+'\\labels', val_path_img=val+'\\images', val_path_label=val+'\\labels', test_path_img=test if test else None)       
+            train_test_split(path=source, neg_path=None, split=0.2, train_path_img=train+'/images', train_path_label=train+'/labels', val_path_img=val+'/images', val_path_label=val+'/labels', test_path_img=test if test else None)       
         if action == 'create_yaml':
             create_yaml(train, val, test = test if test else None)  
             
