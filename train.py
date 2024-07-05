@@ -76,31 +76,15 @@ def prepare_data(source, train, val, test, model, device, workers, imgsz, batch,
                     
 
 @logger.catch
-def create_yaml(train, val, test):
-    if test is None:
-        yaml_data = {
-            'train': train,
-            'val': val,
-            # 'test': test,
-            'nc': 1,  # количество классов
-            'names': ['tbox']  # названия классов
-        }
-    else:
-        yaml_data = {
-            'train': train,
-            'val': val,
-            'test': test,
-            'nc': 1,  # количество классов
-            'names': ['tbox']  # названия классов
-        }
+def create_yaml(train, val, test, nc = 1, names = ['tbox']):
     with open('dataset.yaml', 'w') as f:
         f.write('train: {}\n'.format(train))
         f.write('val: {}\n'.format(val))
         if test is not None:
             f.write('test: {}\n'.format(test))
         f.write("\n\n")
-        f.write('nc: {}\n'.format(yaml_data['nc']))
-        f.write('names: {}\n'.format(yaml_data['names']))
+        f.write('nc: {}\n'.format(nc))
+        f.write('names: {}\n'.format(names))
         f.close()
 
 
