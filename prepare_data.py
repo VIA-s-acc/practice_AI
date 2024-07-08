@@ -13,7 +13,6 @@ class XMLToYOLOConverter:
     def convert(self):
         for xml_file in os.listdir(self.xml_folder):
             if xml_file.endswith('.xml'):
-                print(xml_file)
                 xml_path = os.path.join(self.xml_folder, xml_file)
                 self.convert_xml_to_yolo(xml_path)
 
