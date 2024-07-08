@@ -11,20 +11,20 @@
 
 ### Update : 05.07.2024 INFO
 
-- Добавьте скрипт train.py для автоматизации процесса обучения
+- Добавлен скрипт train.py для автоматизации процесса обучения
 - [Auto Train](#auto-train)
 
 #### Update : 01.07.2024 INFO 
-- Изменил графический интерфейс.
+- Изменён графический интерфейс.
 - Теперь в стандартном режиме графический интерфейс будет работать только с моделью `OBB.pt`.
 - Инструкция по переходу на старую версию
 
-   - Для использования режима *Detect* измените 3 строку файла `gui.main` на:
+   - Для использования режима *Detect* измените 3 строку файла `gui.main` с:
    
    ```python
    from Main.main_page import main_page
    ```
-   to 
+   на 
    ```python
    from Main.main_page_detect import main_page
    ```
@@ -32,7 +32,7 @@
    - В *Standart* режиме будет использоваться OBB.
    - Режим *Detect* не будет работать с моделью `OBB.pt`, а режим *OBB* не будет работать с моделью `detect.pt`.l.
 ### Download Models
-   - Download the best model for Text Blocks and Lines from: [Models](https://disk.yandex.ru/d/xP_VxJ5_Kd4cVA)
+   - Скачайте модели для блоков и строк текста по ссылке: [Models](https://disk.yandex.ru/d/xP_VxJ5_Kd4cVA)
       - Для *TextBlocks OBB* скачайте `TextBlock-OBB.pt`
       - Для *TextBlocks Detect* скачайте `TextBlock-detect.pt`
       - Для *TextLines Detect* загрузите `TextLine-detect.pt`
@@ -43,47 +43,47 @@
 
 ## With GUI
 
-1. **Clone the Repository**
+1. **Клонирование репозитория****
    - Клонируйте репозиторий на свой локальный компьютер:
      ```bash
      git clone git@github.com:VIA-s-acc/practice_AI.git
      ```
 
-2. **Navigate to the Repository**
+2. **Переход в репозиторий**
    - Откройте терминал или командную строку.
    - Измените каталог на клонированный репозиторий:
      ```bash
      cd path/to/your/local/repository
      ```
-   Replace `cd path/to/your/local/repository` with the actual path where your repository is located.
+   Поменяйте `cd path/to/your/local/repository` с путем к вашему локальному репозиторию.
 
-3. **Run the bat**
+3. **Run***
    - Выполните скрипт запуска:
      ```bash
      .\run.bat
      ```
 
-4. **View Output**
+4. **Просмотр выходных данных**
    - Проверьте терминал или командную строку на наличие выводимых данных или ошибок, сгенерированных сценарием.
 
-5. **Adjust as Necessary**
+5. **Просмотр журналов**
    - При наличии ошибок просмотрите журналы или выходные данные консоли, чтобы узнать, как их устранить.
 
 ## With Terminal
 
-1. **Clone the Repository**
+1. **Клонирование репозитория**
    - Клонируйте репозиторий на свой локальный компьютер:
      ```bash
      git clone git@github.com:VIA-s-acc/practice_AI.git
      ```
 
-2. **Navigate to the Repository**
+2. **Переход в репозиторий**
    - Откройте терминал или командную строку.
    - Измените каталог на клонированный репозиторий:
      ```bash
      cd path/to/your/local/repository
      ```
-   Replace `cd path/to/your/local/repository` with the actual path where your repository is located.
+   Поменяйте `cd path/to/your/local/repository` с путем к вашему локальному репозиторию.
 
 3. **Run**
    - Выполнить команду запуска:
@@ -112,20 +112,20 @@
    python train.py -src=`path\to\folder` -train=`path\to\train\folder` -val=`path\to\val\folder` -model=`path\to\model` -test=`path\to\test\folder` 
    ```
    
-   - *`-src`* : path to folder with images and labels
-   - *`-train`* : path to train folder (will used to save train images and labels after split) | Default .\Train
-   - *`-val`* : path to val folder (will used to save val images and labels after split) | Default .\Val
-   - *`-test`* : path to test folder (will used to save test images and labels after split) | (Optional)
-   - *`-model`* : path to .pt model | Default yolov8x.pt
+   - *`-src`* : Путь к папке с изображениями и метками
+   - *`-train`* : Путь к папке с обучающими изображениями и метками (будет использоваться для сохранения изображений и меток после разбиения) | По умолчанию .\Train
+   - *`-val`* : Путь к папке с изображениями и метками для валидации (будет использоваться для сохранения изображений и меток после разбиения) | По умолчанию .\Val
+   - *`-test`* : путь к папке с тестовыми изображениями и метками (будет использоваться для сохранения изображений и меток после разбиения) | (Необязательно)
+   - *`-model`* : путь к .pt модели | По умолчанию yolov8x.pt
    ---
    - ***`CLI`*** info: 
       ```bash
       
-      usage: Trainer [-h] -s S [-t T] [-v V] -m M [-ts TS] [-b B] [-ep EP]
+      Использование: Trainer [-h] -s S [-t T] [-v V] -m M [-ts TS] [-b B] [-ep EP]
       
-      Prepare data and train model
+      Подготовка данных и обучение модели
 
-      options:
+      Опции:
       -h, --help            показать это справочное сообщение и выйти
       -s S, -src S, -source S
                             путь к папке данных с изображениями и метками
@@ -144,12 +144,12 @@
       - Если в процессе обучения что-то пойдет не так, попробуйте изменить устройство на **`'cpu'`** с помощью опции **`'-dcpu'`**.
       - Для использования графического процессора требуется `cuda 11.8`.
          - Если у вас другая версия CUDA, выполните следующие действия:
-            1. Снимите фонарик и torchvision:
+            1. Удалите torch и torchvision:
                ```bash
                pip uninstall torch torchvision
                ```
             2. Установите правильную версию из [link](https://pytorch.org/)
-         - If still not working, try to install ***torchvision==0.18.1+cu****:
+         - Если всё ещё не работает, попробуйте установить ***torchvision==0.18.1+cu****:
             ```bash
             pip install torchvision==0.18.1+cu118 -f https://download.pytorch.org/whl/torch_stable.html
             ```
@@ -157,7 +157,7 @@
 
        
 
-   - метки должны быть в формате .xml с именем объекта. = <Text_Box>
+   - метки должны быть в формате .xml с именем объекта = <Text_Box>
       - Пример
       ---------
       ```xml
@@ -187,7 +187,7 @@
          </bndbox>
       </object>
       ```
-   - Script will resize all images to `(imgsz, imgsz)`, covnert to grayscale, convert **`.xml (class_id,cx,cy,h,w)`** format to **`.txt (class_id,x1,y1,x2,y2,x3,y3,x4,y4)`** and run model train.
+   - Скрипт будет изменять размеры всех изображений на `(imgsz, imgsz)`, преобразовывать их в оттенки серого, преобразовывать формат меток из `.xml (class_id,cx,cy,h,w)` в `.txt (class_id,x1,y1,x2,y2,x3,y3,x4,y4)`, а затем запустить обучение модели.
    ---
 #### Manual train
    - Создавать папки данных
@@ -227,6 +227,6 @@
       - project: path to result
       - data: path to dataset.yaml
       - model: path to model
-   - In training, the parameters used were `task=obb`, `epoches=100`, and `batch=16`.
+   - В обучении моделей из [Models](#download-models) использовались параметры `task=obb`, `epoches=100`, and `batch=16`.
 
 
