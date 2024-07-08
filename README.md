@@ -2,11 +2,12 @@
 
 ## Content
 - [Models](#download-models)
+- [GUI](#with-gui)
+- [Terminal](#with-terminal)
 - [Train](#train)
    - [Auto Train](#auto-train)
    - [Manual Train](#manual-train)
-- [GUI](#with-gui)
-- [Terminal](#with-terminal)
+
 
 
 ### Update : 08.07.2024 INFO
