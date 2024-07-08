@@ -8,6 +8,10 @@
 - [GUI](#with-gui)
 - [Terminal](#with-terminal)
 
+### Update : 08.07.2024 INFO
+
+- Добавлен скрипт predict.py для автоматизации процесса предсказывания
+- [In with Terminal](#with-terminal)
 
 ### Update : 05.07.2024 INFO
 

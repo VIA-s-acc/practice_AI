@@ -9,6 +9,11 @@
 - [Terminal](#with-terminal)
 
 
+### Update : 08.07.2024 INFO
+
+- Add predict.py script to automate the process of prediction
+- [In with Terminal](#with-terminal)
+
 ### Update : 05.07.2024 INFO
 
 - Add train.py script to automate the process of training 
