@@ -95,6 +95,31 @@
    - `conf` should be replaced with the desired confidence level.
    - results will be saved in `runs\obb\predict{k}` folder.
 
+   OR
+
+   ```bash
+   python .\predict.py -t obb -s C:\practice\0041.jpg -mb C:\practice\models\best\TextBlock-OBBv2.pt -ml C:\practice\models\best\TextLine-OBB.pt -c 0.59 -l 1
+   ```
+
+   predict.py CLI options:
+   ```bash
+   usage: Predictor [-h] -t T -s S -mb MB -ml ML [-c C] [-l L]
+
+   Predict on image
+
+   options:
+   -h, --help            show this help message and exit
+   -t T, -task T         task (obb | detect | segment | classify | pose | OBB)
+   -s S, -src S, -source S
+                           path to image
+   -mb MB, -model-block MB
+                           path to .pt model ( of text block detector )
+   -ml ML, -model-line ML
+                           path to .pt model ( of text line detector )
+   -c C, -conf C         confidence level ( from 0 to 1 )
+   -l L, -line L, -line_width L
+                           line width
+   ```
 ---
 ## Train 
 

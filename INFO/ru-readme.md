@@ -95,6 +95,32 @@
    - `conf` следует заменить на желаемый уровень доверия.
    - результаты будут сохранены в папке `runs\obb\predict{k}`.
 
+   Или
+
+   ```bash
+   python .\predict.py -t obb -s C:\practice\0041.jpg -mb C:\practice\models\best\TextBlock-OBBv2.pt -ml C:\practice\models\best\TextLine-OBB.pt -c 0.59 -l 1
+   ```
+
+   predict.py CLI options:
+   ```bash
+   usage: Predictor [-h] -t T -s S -mb MB -ml ML [-c C] [-l L]
+
+   Predict on image
+
+   options:
+   -h, --help            Показать это сообщение
+   -t T, -task T         задача (obb | detect | segment | classify | pose | OBB)
+   -s S, -src S, -source S
+                           путь к изображению
+   -mb MB, -model-block MB
+                           путь к модели ( Детектор блоков )
+   -ml ML, -model-line ML
+                           путь к модели ( Детектор линий )
+   -c C, -conf C         Минимальный порог доверия ( from 0 to 1 )
+   -l L, -line L, -line_width L
+                           Ширина линий
+   ```
+
 ---
 ## Train 
 
