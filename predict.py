@@ -42,7 +42,13 @@ def predict(**kwargs):
     labels_dir = os.path.join(last_pred_dir, 'labels')
     if not os.path.exists(labels_dir):
         return
-    label_file = os.listdir(labels_dir)[0]
+    try:
+        label_file = os.listdir(labels_dir)[0]
+    except:
+        label_file = 'labels.txt'
+        with open(os.path.join(labels_dir,label_file), 'w') as f:
+            f.write('No labels found')
+            
     if os.path.getsize(os.path.join(labels_dir,label_file)) == 0:
         with open(os.path.join(labels_dir,label_file), 'w') as f:
             f.write('No labels found')
