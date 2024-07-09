@@ -21,6 +21,8 @@ def parse_args(args):
     parser.add_argument('-l','-line','-line_width', type=int, required=False, default=5, help='line width')
 
     return parser.parse_args(args)
+
+@logger.catch
 def predict(**kwargs):
     from ultralytics import YOLO
     model_block = YOLO(kwargs['model-b'])
