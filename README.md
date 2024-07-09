@@ -1,9 +1,4 @@
-### INSTRUCTIONS LANGUAGE CHOOSE
+### $${\color{auto} \space CHOOSE \space THE \space LANGUAGE \space | \space ВЫБЕРИТЕ \space ЯЗЫК}$$
 
-[EN](/INFO/en-readme.md)
-[RU](/INFO/ru-readme.md)
-
-### ВЫБОР ЯЗЫКА ИНСТРУКЦИИ
-
-[АНГ](/INFO/en-readme.md)
-[РУС](/INFO/ru-readme.md)
+#### [$${\color{GREEN}RU \space \color{red}ИНСТРУКЦИЯ}$$](/INFO/ru-readme.md)  
+#### [$${\color{GREEN}EN \space \color{red}INSTRUCTION}$$](/INFO/en-readme.md)
