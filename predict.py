@@ -1,4 +1,4 @@
-from gui.Main.utils.Tbox import TboxGenerator
+from gui.Main.utils.Tbox import TboxGenerator ### TO USE EXPEREMENTAL TboxGenerator WITH ROTATION FIX REPLACE gui.Main.utuils.Tbox WITH gui.Main.utils.Tbox_modify
 from loguru import logger
 import sys
 import argparse

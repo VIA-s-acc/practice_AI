@@ -8,6 +8,10 @@
    - [Auto Train](#auto-train)
    - [Manual Train](#manual-train)
 
+### Update : 09.07.2024 INFO
+
+Чтобы использовать экспериментальный класс `TboxGenerator` с исправлением вращения, замените `gui.Main.utils.Tbox` на `gui.Main.utils.Tbox_modify` в файле predict.py:1.
+
 
 ### Update : 08.07.2024 INFO
 

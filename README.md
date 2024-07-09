@@ -9,6 +9,8 @@
    - [Manual Train](#manual-train)
 
 
+### Update : 09.07.2024 INFO
+To use the experimental `TboxGenerator` class with rotation fix, replace `gui.Main.utils.Tbox` with `gui.Main.utils.Tbox_modify` in the predict.py file:1.
 
 ### Update : 08.07.2024 INFO
 
