@@ -144,7 +144,7 @@
 #### Auto-train
    - Запустить скрипт `train.py`
    ```bash
-   python train.py -src=`path\to\folder` -train=`path\to\train\folder` -val=`path\to\val\folder` -model=`path\to\model` -test=`path\to\test\folder` 
+   python train.py -src `path\to\folder` -train `path\to\train\folder` -val `path\to\val\folder` -model `path\to\model` -test `path\to\test\folder` 
    ```
    
    - *`-src`* : Путь к папке с изображениями и метками

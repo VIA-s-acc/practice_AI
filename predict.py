@@ -4,7 +4,7 @@ import sys
 import argparse
 import os
 logger.remove(0)
-logger.add('predict.log', level="DEBUG", rotation='10 MB')
+logger.add('logs/predict.log', level="DEBUG", rotation='10 MB')
 logger.add(sys.stderr, level="INFO")
 
 @logger.catch

@@ -1,15 +1,15 @@
 import os
 import argparse
 import sys
-from prepare_data import XMLToYOLOConverter
-from split import train_test_split, resize_all, cxcyhw_to_x1xn1x2yn2, grayscale_all, convert_to_jpg
+from utils.prepare_data import XMLToYOLOConverter
+from utils.split import train_test_split, resize_all, cxcyhw_to_x1xn1x2yn2, grayscale_all, convert_to_jpg
 import shutil
 from tqdm import tqdm
 import torch
 from loguru import logger
 import os
 logger.remove(0)
-logger.add('train.log', level="DEBUG", rotation='10 MB')
+logger.add('logs/train.log', level="DEBUG", rotation='10 MB')
 logger.add(sys.stderr, level="INFO")
 
 
