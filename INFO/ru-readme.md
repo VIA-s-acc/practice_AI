@@ -1,4 +1,4 @@
-[EN-README](/README.md)
+[EN-README](en-readme.md)
 
 ## Content
 - [Models](#download-models)
