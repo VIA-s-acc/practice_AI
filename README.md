@@ -1,4 +1,4 @@
-[RU-README](https://github.com/VIA-s-acc/practice_AI/blob/main/INFO/ru-readme.md)
+[RU-README](INFO/ru-readme.md)
 
 ## Content
 - [Models](#download-models)
