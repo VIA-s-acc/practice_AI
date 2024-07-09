@@ -1,8 +1,13 @@
+#### DONT USE THIS CODE #### 
+
+
 import cv2
 import os
 import numpy as np
 from PIL import Image
-
+import matplotlib.pyplot as plt
+import math
+from collections import namedtuple
 class TboxGenerator:
     def __init__(self, path_to_img, path_to_labels, path_to_save, mode = 'OBB'):
         self.path_to_img = path_to_img
@@ -55,14 +60,44 @@ class TboxGenerator:
                 ignore_mask_color = (255,)*channel_count
                 cv2.fillConvexPoly(mask, roi_corners, ignore_mask_color)
                 masked_image = cv2.bitwise_and(img, mask)
+                masked_image = self.rotate_crop(masked_image, (x1, y1), (x2, y2))
+                cv2.imwrite(os.path.join(self.path_to_save, f'tbox_{i}.jpg'), masked_image)
                 cropped = Image.fromarray(masked_image[:, :, ::-1])
                 bbox = cropped.getbbox()
                 croppeed_image = cropped.crop(bbox)
                 croppeed_image.save(os.path.join(self.path_to_save, f'tbox_{i}.jpg'))
                 
-
-                
         return self.path_to_save        
         
 
+                
+    def rotate_crop(self, image, pt1, pt2):
+        vec = namedtuple('Point', ['x', 'y'])
+        vec.x, vec.y = pt2[0] - pt1[0], pt2[1] - pt1[1]
+        theta = math.atan2(vec.y, vec.x)
+        theta = math.degrees(theta)
+        if theta > 45:
+            theta = theta - 90
+        elif theta < -45:
+            theta = theta + 90  
+        image = self.rotate_image(image, theta)
+        
+        return image                 
+              
+                
+    def rotate_image(self, image, angle):
+        image_center = tuple(np.array(image.shape[1::-1]) / 2)
+        rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+        result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+        return result
+            
+
+
+
+
+
+                
+                
+
+                
 
