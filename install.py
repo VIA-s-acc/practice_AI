@@ -2,7 +2,7 @@ import subprocess
 import traceback
 import os
 import string
-
+import sys
 EXIT_CODES = {
     'SUCCESS': 0,
     'VENV_ERROR': 1,
@@ -22,18 +22,20 @@ colors = {
 
 def install(req_path = 'requirements.txt'):
     this_dir = os.path.dirname(os.path.abspath(__file__))
-    libs = subprocess.check_output([f"{this_dir}/.venv/Scripts/pip", "list"]).decode().split('\n')
-    libs = libs[2:]
-    
-    for i in range(len(libs)):
-        libs[i] = ' '.join(libs[i].split()).replace(' ', '==')
     print(f"{colors['HEADER']}Start Checker... {colors['ENDC']}")
-    print(f"{colors['BLUE']}Check if virtual environment exists...{colors['ENDC']}")
-
+    print(f"{colors['BLUE']}Checking python version...{colors['ENDC']}")
+    python_version = sys.version.split()[0]
+    print(f"{colors['GREEN']}Python version is {python_version} {colors['ENDC']}")
+    if not '3.10' in python_version:
+        print(f"{colors['FAIL']}Python version is not 3.10.* ❌{colors['ENDC']}")
+        print(f"{colors['FAIL']}Fix the error and try again{colors['ENDC']}")
+        exit(EXIT_CODES['VERSION_ERROR'])
+        
+    
     if not os.path.exists('.venv'):
         print(f"{colors['FAIL']}Virtual environment does not exist, creating...{colors['ENDC']}")
         try:
-            subprocess.check_call(['py', '-3.10', '-m', 'venv', 'venv', '.venv'])
+            subprocess.check_call([sys.executable, '-m', 'venv', '.venv'])
             print(f"{colors['GREEN']}Virtual environment ('.venv') created ✅{colors['ENDC']}")
         except subprocess.CalledProcessError:
             print(f"{colors['FAIL']}Failed to create virtual environment ❌{colors['ENDC']}")
@@ -52,7 +54,10 @@ def install(req_path = 'requirements.txt'):
             print(f"{colors['FAIL']}Fix the error and try again{colors['ENDC']}")
             exit(EXIT_CODES['VERSION_ERROR'])
     
-
+    libs = subprocess.check_output([f"{this_dir}/.venv/Scripts/pip", "list"]).decode().split('\n')
+    libs = libs[2:]
+    for i in range(len(libs)):
+        libs[i] = ' '.join(libs[i].split()).replace(' ', '==')
     with open(req_path, 'r') as f:
         for line in f.readlines():
             lib = line.strip()

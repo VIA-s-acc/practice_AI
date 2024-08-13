@@ -6,6 +6,7 @@
 /Val
 /Data
 /Dataset
+.venv/
 *.pyc
 *.xml
 *[^requirements]*.txt
