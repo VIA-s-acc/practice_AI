@@ -45,19 +45,33 @@ def install(req_path = 'requirements.txt'):
     else:
         print(f"{colors['GREEN']}Virtual environment already exists ✅{colors['ENDC']}")
         print(f"{colors['BLUE']}Checking virtual environment python version...{colors['ENDC']}")
-        
-        venv_python = os.path.join(f'{this_dir}/.venv', 'Scripts', 'python.exe')
+        if sys.platform == 'win32':
+            venv_python = os.path.join(f'{this_dir}/.venv', 'Scripts', 'python.exe')
+        else:
+            venv_python = os.path.join(f'{this_dir}/.venv', 'bin', 'python')
         python_version = subprocess.check_output([venv_python, '--version'], shell=True, stderr=subprocess.DEVNULL).decode().strip()
         print(f"Virtual environment Python version: {python_version}")
         if not '3.10' in python_version:
             print(f"{colors['FAIL']}Virtual environment Python version is not 3.10 ❌{colors['ENDC']}")
             print(f"{colors['FAIL']}Fix the error and try again{colors['ENDC']}")
             exit(EXIT_CODES['VERSION_ERROR'])
-    
-    libs = subprocess.check_output([f"{this_dir}/.venv/Scripts/pip", "list"]).decode().split('\n')
+    if sys.platform == 'win32':
+        libs = subprocess.check_output([f"{this_dir}/.venv/Scripts/pip", "list"]).decode().split('\n')
+    else: 
+        libs = subprocess.check_output([f"{this_dir}/.venv/bin/pip", "list"]).decode().split('\n')
+        
     libs = libs[2:]
     for i in range(len(libs)):
         libs[i] = ' '.join(libs[i].split()).replace(' ', '==')
+    
+    try:
+        print(f"{colors['BLUE']}Updating pip...{colors['ENDC']}")
+        subprocess.check_call([venv_python, "-m", "pip", "install", "--upgrade", "pip"])
+        print(f"{colors['GREEN']}pip updated ✅{colors['ENDC']}")
+    except subprocess.CalledProcessError:
+        print(f"{colors['FAIL']}Failed to update pip ❌{colors['ENDC']}")
+        print(f"{colors['FAIL']}Fix the error and try again{colors['ENDC']}")
+        
     with open(req_path, 'r') as f:
         for line in f.readlines():
             lib = line.strip()
@@ -66,11 +80,20 @@ def install(req_path = 'requirements.txt'):
             if lib:
                 if lib in libs:
                     print(f"{colors['GREEN']}Check Pass | {lib} is already installed ✅{colors['ENDC']}")
+                elif lib == "torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118":
+                    print(f"{lib} not installed, installing...")
+                    pcgs  = [
+                        'torch',
+                        'torchvision',
+                        'torchaudio'
+                    ]
+                    command = [venv_python, '-m', 'pip', 'install'] + pcgs + ['--index-url', 'https://download.pytorch.org/whl/cu118']
+                    subprocess.run(command, check=True)
                 else:
                     print(f"{lib} not installed, installing...")
                     try:
                         print(f"{colors['BLUE']}Check : {lib} not installed, installing...{colors['ENDC']}")
-                        subprocess.run(['.venv/Scripts/pip', 'install', lib], check=True)
+                        subprocess.run([venv_python, '-m', 'pip', 'install', lib], check=True)
                         print(f"{colors['GREEN']}Successfully installed {lib} ✅{colors['ENDC']}")
                     except Exception as e:
                         print(f"{colors['FAIL']}Failed to install {lib} ❌{colors['ENDC']}")
